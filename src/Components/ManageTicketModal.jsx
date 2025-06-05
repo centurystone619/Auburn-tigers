@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext,  } from 'react'
 import { GlobalContext } from '../Context'
 import sellseatgeek from '../assets/sell.PNG?url';
 import Transfer from './Transfer';
@@ -30,12 +30,24 @@ const ManageTicketModal = () => {
  <section className='h-[82vh]'>
  <div className=''>
   <ul className='mt-2  h-[30vh]  mx-3 '>
-    <li className={`h-1/2 rounded-tr-4xl rounded-tl-4xl relative ${eventIndex[0].transfers.color}`}  style={{backgroundImage:`url(${eventIndex[0]?.transfers.teamLogo})`, backgroundRepeat:`no-repeat`, backgroundPosition:`center`, backgroundSize:`contain`, backgroundColor:eventIndex[0].transfers.color}}>
+    {/* <li className={`h-1/2 rounded-tr-4xl rounded-tl-4xl relative ${eventIndex[0].transfers.color}`}  style={{backgroundImage:`url(${eventIndex[0]?.transfers.teamLogo})`, backgroundRepeat:`no-repeat`, backgroundPosition:`center bottom`, backgroundSize:`80% 180px`, backgroundColor:eventIndex[0].transfers.color  }}>
     
    
       {eventIndex[0].eventData.dayMonthYear ? <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600]'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600]'>
       {eventIndex[0].eventData.sportsdow.toUpperCase()} <em className="">•</em> {eventIndex[0].time.toUpperCase()} </p>}
+      </li> */}
+
+
+      <li className={`h-1/2 relative rounded-tr-4xl rounded-tl-4xl flex items-center justify-center overflow-hidden  `}  style={{background:`${eventIndex[0].transfers.color}`}} >
+<div className=''><img src={eventIndex[0]?.transfers.teamLogo} className='h-[20vh] '/></div>
+
+<div className='absolute  border-8 top-0 left-0'>
+      {eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600] top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600]'>
+      {eventIndex[0].eventData.sportsdow.toUpperCase()} <em className="">•</em> {eventIndex[0].time.toUpperCase()} </p>}
+    </div>  
       </li>
+
+  
     
     <li className='h-1/2 flex bg-white rounded-br-4xl rounded-bl-4xl'>
     <ul className='w-10/12 px-5 mt-3 '>
@@ -281,7 +293,7 @@ const ManageTicketModal = () => {
                               <div >
                                {tickets.length === 0 ?(  <p className="text-center text-gray-500">No upcoming events</p>):(
                                 <div className=''>
-{firstEvents.map(({ artiste, eventType, eventData, time, venue,transfers},index)=>{
+{firstEvents.map(({ artiste, eventType, eventData, time, venue},index)=>{
   return(
 
 

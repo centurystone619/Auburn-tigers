@@ -30,7 +30,7 @@ const Home = () => {
   <ul id='homeabsolute'  className='px-5 space-y-2  pb-2 text-grey-200 '>
               <li className='font-semibold text-[11px] text-grey-200'>{story.sportType} <em className="mx-1">•</em> {story.time}</li>
               <li className='leading-none font-bold text-[18px]'>{story.topic}</li>
-              <li className='leading-none text-[11px]'>{story.summary.substring(0, 50)} ...</li>
+        { story.summary &&     <li className='leading-none text-[11px]'>{story.summary.substring(0, 50)} ...</li>}
             </ul>
   </div></div>
 </div>

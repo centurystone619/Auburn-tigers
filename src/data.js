@@ -5,7 +5,7 @@ export const eventData=[
 
     [
         {
-          eventType:'BaseBall 2025',
+          eventType:'Baseball 2025',
           yourMail:"JohnsonAnita915@gmail.com",
         yourName:"Johnson Anita",
         artiste: "AU",
