@@ -1,0 +1,35 @@
+
+
+@import "tailwindcss";
+
+body {
+    background-color: #04244d;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+  }
+
+
+#shadow{
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+}
+  
+  /* #homeabsolute {
+    background: linear-gradient(to bottom, transparent, black);  } */
+    #homeabsolute {
+        background: linear-gradient(to bottom, transparent, black);  }
+
+
+       #btn-border{
+border: 2px solid rgb(211, 207, 207);
+        }
+
+        input:focus{
+          border-color: black;
+          outline: none;
+        }
+
+        #bb{
+          border-bottom: 1px solid #84868b;
+        }
