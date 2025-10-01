@@ -3,12 +3,15 @@
 @import "tailwindcss";
 
 body {
-    background-color: #04244d;
+    background-color: #2f3031;
+    /* background: linear-gradient(to bottom, green, black); */
     height: 100vh;
     margin: 0;
     padding: 0;
     width: 100vw;
   }
+
+ 
 
 
 #shadow{
@@ -23,6 +26,7 @@ body {
 
        #btn-border{
 border: 2px solid rgb(211, 207, 207);
+font-size: 16px;
         }
 
         input:focus{
@@ -32,4 +36,20 @@ border: 2px solid rgb(211, 207, 207);
 
         #bb{
           border-bottom: 1px solid #84868b;
+        }
+
+        #activebtn{
+          border: 2px solid #ffffff;
+          width: 5px;
+          height: 5px;
+          border-radius: 100%;
+          background-color: #ffffff;
+        }
+
+        #notactivebtn{
+            border: 1px solid #ffffff;
+          width: 5px;
+          height: 5px;
+          border-radius: 100%;
+          background-color: transparent;
         }

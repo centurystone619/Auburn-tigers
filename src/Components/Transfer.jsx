@@ -37,31 +37,40 @@ const Transfer = () => {
           
 
 
-                <form className="" onSubmit={handleSubmit}>
+                <form className="py-3" onSubmit={handleSubmit} >
           
 
-                <ul className='p-5 '>
+                <ul className='px-5'>
                     <li className='flex items-center '>
                   
                         <div> <input
                       type="checkbox"
                       checked={selectedItems.length === ticketList.length && ticketList.length > 0}
                       onChange={handleSelectAll}
-                      className="w-4 h-4   rounded-sm checked:bg-black checked:border-black focus:ring-black"
+                      className="w-[14px] h-[14px] mt-1  rounded-sm checked:bg-black checked:border-black focus:ring-black"
                     /></div>
-                        <p className="ml-2 text-[14px] mt-1 font-[500]">Select All</p>
+                        <p className="ml-2 text-[14px]  font-[500]">Select All</p>
                     </li> 
+
+                    {eventIndex[0].seat && <ul className='flex font-[700] text-[14px] pt-3 '>
+                   { eventIndex[0].level && <li>{eventIndex[0].level} <em className="mx-1">•</em></li>}
+                   {eventIndex[0].sec && <li>Section {eventIndex[0].sec} </li>}
+                   {/* { eventIndex[0].row && <li>Row {eventIndex[0].row} <em className="mx-1">•</em></li>}
+                     {eventIndex[0].seat && <li>Seat {eventIndex[0].seat}</li>} */}
+                    </ul>}
+
+
                     {ticketList.map((ticket,index)=>{
                         return(
-<li key={index} className='flex items-center   '>
+<li key={index} className='flex items-start my-4  '>
     <div className='flex items-center   '>   <input
                         type="checkbox"
                         checked={selectedItems.includes(index)}
                         onChange={() => handleCheckboxChange(index)}
-                        className="w-4 h-4 border-2 border-black rounded-sm checked:bg-black checked:border-black focus:ring-black"
+                        className="w-[14px] h-[14px] border-2 border-black rounded-sm checked:bg-black checked:border-black focus:ring-black translate-y-1"
                       /></div>
 
-<div className="ml-2 -mt-3">
+{/* <div className="ml-2 ">
   {transfers.GA || transfers.ticketId ? (
     sec ? (
       <ul className="flex flex-col pt-[45px] font-[500] text-[14px]">
@@ -83,16 +92,92 @@ const Transfer = () => {
       </ul>
     )
   ) : (
-    <ul className='  mt-4'>
-      <li className=' '>
-        <p className='font-[500] text-[14px]'>
-          <span> <em className='text-[#84868b]'>Sec </em>{sec},</span>
-          <span className="mx-2"><em className='text-[#84868b]'>Row  </em>{row},</span>
-          <span> <em className='text-[#84868b]'>Seat  </em>  {ticket}</span>
-        </p>
-      </li>
-    </ul>
+    // <ul className='  mt-4'>
+    //   <li className=' '>
+    //     <p className='font-[500] text-[14px]'>
+    //       <span> <em className='text-[#84868b]'>Sec </em>{sec},</span>
+    //       <span className="mx-2"><em className='text-[#84868b]'>Row  </em>{row},</span>
+    //       <span> <em className='text-[#84868b]'>Seat  </em>  {ticket}</span>
+    //     </p>
+    //   </li>
+    // </ul>
+
+      <ul className="flex flex-col  font-[500] text-[14px] mt-[45px]">
+       <ul className='flex flex-col'>
+        <li>
+          <ul className='flex'>
+             <li><span><em className='text-[#84868b]'>Row </em> {row}</span> <em className="mx-1">•</em></li>
+        <li><span><em className='text-[#84868b]'>Seat </em> {seat}</span></li>
+          </ul>
+        </li>
+        <li>
+          <ul className='block break-words'>
+            <li>Sec {sec} <em className="mx-1">•</em> </li>
+            <li>{type}</li>
+          </ul>
+        </li>
+       </ul>
+      </ul>
   )}
+</div> */}
+
+<div className='  pb-2'>
+  <div className="ml-2  w-55  ">
+  {transfers.GA || transfers.ticketId ? (
+    sec ? (
+      <ul className="flex flex-col  font-[500] text-[14px] ">
+        <li><span><em className='text-[#84868b]'>Sec </em> {sec}</span></li>
+        <li className="leading-tight text-[#84868b]">
+          {transfers.GA && transfers.GA.toUpperCase()} 
+          {type && <em className="mx-1">•</em>} 
+          {type && type.toUpperCase()}
+        </li>
+      </ul>
+    ) : (
+      <ul className="flex flex-col pt-[45px] font-[500] text-[14px]">
+        <li>{transfers.GA}</li>
+        <li className="leading-tight text-[#84868b]">
+          {transfers.GA && transfers.GA.toUpperCase()} 
+          {type && <em className="mx-1">•</em>} 
+          {type && type.toUpperCase()}
+        </li>
+      </ul>
+    )
+  ) : (
+    // <ul className='  mt-4'>
+    //   <li className=' '>
+    //     <p className='font-[500] text-[14px]'>
+    //       <span> <em className='text-[#84868b]'>Sec </em>{sec},</span>
+    //       <span className="mx-2"><em className='text-[#84868b]'>Row  </em>{row},</span>
+    //       <span> <em className='text-[#84868b]'>Seat  </em>  {ticket}</span>
+    //     </p>
+    //   </li>
+    // </ul>
+
+      <ul className="flex flex-col  font-[500] text-[14px] h-full  ">
+       <ul className='flex flex-col  '>
+        <li className='text-start '>
+          <ul className='flex'>
+             <li className='flex'>Row  {row} <em className="mx-1">•</em></li>
+        <li><span><em className=''>Seat </em> {seat}</span></li>
+          </ul>
+        </li>
+        <li>
+          {/* <ul className=' text-start inline-flex'>
+            <li className='flex flex-nowrap text-start'>Sec {sec}  </li>
+            {type && <li><em className="mx-1">•</em></li>}
+            <li> {type}</li>
+          </ul> */}
+ <div className='text-start break-words text-[#84868b] font-[500]'>
+            <span>Sec {sec}</span>
+            {type && <span><em className="mx-1">•</em> {type}</span>}
+          </div>
+          
+        </li>
+       </ul>
+      </ul>
+  )}
+</div>
 </div>
 
 </li>

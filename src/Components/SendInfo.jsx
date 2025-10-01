@@ -65,7 +65,7 @@ const SendInfo = () => {
            <li className='flex flex-col '>
            <label  className="block mb-1 font-semibold">Mobile Number *</label>
                <input id="btn-border" type="tel"  name="mobileNumber" 
-                      placeholder="(___) ___-____" className=" w-full p-2 border border-gray-800 rounded pl-10"/>
+                      placeholder="(___) ___-____" className=" w-full p-2 border border-gray-800 rounded pl-10 "/>
            </li>
            <li className='my-4'>  <a href="#" className="text-[#84868b]  text-[13px] font-[600] underline">Use Email Instead</a></li>
        </ul>

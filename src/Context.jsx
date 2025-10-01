@@ -1,314 +1,177 @@
-import { createContext, useState,useEffect, useRef} from "react";
-// import { eventData } from './data.js';
+import { createContext, useState, useEffect, useRef } from "react";
 import { eventData } from "./data";
-
 
 const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
-    const [tickets,setTickets]= useState(eventData)
-    
-    const [isTicketOpen,setIsTicketOpen]= useState(null)
-    const [isLoading,setIsLoading]= useState(false)
-    const [isManageBtn,setIsManageBtn] =useState(null)
-    const [selectedEventIndex,setSelectedEventIndex]=useState(0)
-    const [isTransferOpen,setIsTransferOpen]= useState(null)
+    const [tickets, setTickets] = useState(eventData);
+    const [isTicketOpen, setIsTicketOpen] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isManageBtn, setIsManageBtn] = useState(null);
+    const [selectedEventIndex, setSelectedEventIndex] = useState(0);
+    const [isTransferOpen, setIsTransferOpen] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [sendForm,setSendForm] = useState(false)
-    const [isIndexSelected,setIsIndexSelected]= useState(null)
+    const [sendForm, setSendForm] = useState(false);
+    const [isIndexSelected, setIsIndexSelected] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [transX,setTransX] = useState('')
+    const [transX, setTransX] = useState('');
+    const [screenSize, setScreenSize] = useState('medium'); // 'small', 'medium', 'large'
     const carouselRef = useRef(null);
-    
-   
-    // const ticket = tickets[selectedEventIndex];
+
     const firstEvents = tickets.map(item => item[0]);
-const eventIndex =tickets[selectedEventIndex]
-// const openEventIndex=(index)=>{
-//     setSelectedEventIndex(index);
-//     console.log(`Selected Event Group: ${index}`);
-// }
+    const eventIndex = tickets[selectedEventIndex];
 
-// const openEventIndex = (index) => {
-//     // Ensure index is valid before setting selectedEventIndex
-//     if (index >= 0 && index < firstEvents.length) {
-//       setSelectedEventIndex(index);
-//       console.log(`Selected Event Group: ${index}`);
-//     } else {
-//       console.warn(`Invalid index ${index} for tickets array of length ${tickets.length}`);
-//       setSelectedEventIndex(null); // Reset to null if invalid
-//     }
-//   };
+    // Screen size detection
+    useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            if (width < 390) {
+                setScreenSize('small');
+            } else if (width > 414) {
+                setScreenSize('large');
+            } else {
+                setScreenSize('medium');
+            }
+        };
 
+        // Set initial screen size
+        handleResize();
 
-const handleEventClick = (index) => {
-    setSelectedEventIndex(index);
-    setIsIndexSelected(true);
-    console.log(`${index}`)
-   
-  
-  };
+        // Add event listener
+        window.addEventListener('resize', handleResize);
 
-    const manageBtn=()=>{
-        setIsLoading(true)
-        setIsManageBtn(true)
-    }
+        // Cleanup
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-    const returnToManageBtn=()=>{
-        setIsLoading(false)
-        setIsManageBtn(false)
-    }
+    // Translation values for different screen sizes
+    const getTranslateX = (index, size) => {
+        const translations = {
+            small: {
+                0: '25px',
+                1: '-286px',
+                2: '-594px',
+                3: '-903px',
+                4: '-1212px',
+                5: '-1776px',
+                6: '-2133px',
+                7: '-2497px',
+                8: '-2859px',
+                9: '-3220px'
+            },
+            medium: {
+                0: '25px',
+                1: '-312px',
+                2: '-651px',
+                3: '-991px',
+                4: '-1326px',
+                5: '-1518px',
+                6: '-1825px',
+                7: '-2134px',
+                8: '-2442px',
+                9: '-2749px'
+            },
+            large: {
+                0: '25px',
+                1: '-312px',
+                2: '-654px',
+                3: '-992px',
+                4: '-1335px',
+                5: '-1518px',
+                6: '-1825px',
+                7: '-2134px',
+                8: '-2442px',
+                9: '-2749px'
+            }
+        };
 
-    const homeBtn=()=>{
-        setIsTicketOpen(false)
-        setIsLoading(false)
-        setIsManageBtn(false)
-    }
+        return translations[size][index] || '25px';
+    };
 
-    // const openTransfer=()=>{
-    //     setIsTransferOpen(true)
-    // }
+    const handleEventClick = (index) => {
+        setSelectedEventIndex(index);
+        setIsIndexSelected(true);
+        console.log(`${index}`);
+    };
+
+    const manageBtn = () => {
+        setIsLoading(true);
+        setIsManageBtn(true);
+    };
+
+    const returnToManageBtn = () => {
+        setIsLoading(false);
+        setIsManageBtn(false);
+    };
+
+    const homeBtn = () => {
+        setIsTicketOpen(false);
+        setIsLoading(false);
+        setIsManageBtn(false);
+    };
 
     const handleCheckboxChange = (seatIndex) => {
         setSelectedItems((prevSelected) =>
             prevSelected.includes(seatIndex)
-                ? prevSelected.filter((index) => index !== seatIndex) // Remove if already selected
-                : [...prevSelected, seatIndex] // Add if not selected
+                ? prevSelected.filter((index) => index !== seatIndex)
+                : [...prevSelected, seatIndex]
         );
     };
 
-    // const handleSelectAll = () => {
-    //     if (selectedItems.length === firstEvents[0].transfers.seats.length) {
-    //         setSelectedItems([]); // Deselect all
-    //     } else {
-    //         setSelectedItems(firstEvents[0].transfers.seats.map((_, index) => index)); // Select all
-    //     }
-    // };
-
-
-    // const handleSelectAll = () => {
-    //     const { transfers } = firstEvents[0];
-    
-    //     let itemsToSelect = [];
-    
-    //     if (transfers.GA) {
-    //         itemsToSelect = Array.from({ length: transfers.GA.length }, (_, index) => index);
-    //     } else if (transfers.ticketId) {
-    //         itemsToSelect = transfers.ticketId.map((_, index) => index);
-    //     } else if (transfers.seats) {
-    //         itemsToSelect = transfers.seats.map((_, index) => index);
-    //     }
-    
-    //     if (selectedItems.length === itemsToSelect.length) {
-    //         setSelectedItems([]); // Deselect all
-    //     } else {
-    //         setSelectedItems(itemsToSelect); // Select all
-    //     }
-    // };
-    
-
-    // const handleSelectAll = () => {
-    //     const { transfers } = firstEvents[0];
-    
-    //     // Combine all indexes from different ticket types
-    //     let allIndexes = [];
-    //     if (transfers.GA) {
-    //         allIndexes = [...allIndexes, ...transfers.GA.map((_, index) => `GA-${index}`)];
-    //     }
-    //     if (transfers.ticketId) {
-    //         allIndexes = [...allIndexes, ...transfers.ticketId.map((_, index) => `ID-${index}`)];
-    //     }
-    //     if (transfers.seats) {
-    //         allIndexes = [...allIndexes, ...transfers.seats.map((_, index) => `Seat-${index}`)];
-    //     }
-    
-    //     // Check if all items are selected
-    //     const allSelected = allIndexes.every(index => selectedItems.includes(index));
-    
-    //     // Toggle selection based on current state
-    //     if (allSelected) {
-    //         setSelectedItems([]); // Deselect all
-    //     } else {
-    //         setSelectedItems(allIndexes); // Select all
-    //     }
-    // };
-    
     const handleSelectAll = () => {
-        const { transfers } = eventIndex[0]; // Assuming eventIndex is available in context
+        const { transfers } = eventIndex[0];
         const ticketList = transfers.ticketId ? transfers.ticketId : transfers.seats;
-      
+
         if (selectedItems.length === ticketList.length) {
-          setSelectedItems([]); // Deselect all
+            setSelectedItems([]);
         } else {
-          setSelectedItems(ticketList.map((_, index) => index)); // Select all using numeric indices
+            setSelectedItems(ticketList.map((_, index) => index));
         }
-      };
-      
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Selected Seats:", selectedItems);
-        // Handle form logic (e.g., API call, navigation)
     };
 
-    
-
-  const handleIndexClose= ()=>{
-    setIsIndexSelected(false)
-    setCurrentIndex(0)
-  }
-
-  const closeTransfer=()=>{
-setIsTransferOpen(false)
-setSelectedItems([])
-  }
-  
-
-  const closeSendInfo=()=>{
-setSendForm(null)
-setSelectedItems([])
-  }
-
-// const handleTicketbtn = (index) => {
-    //small screen
-//     setCurrentIndex(index);
-//     const newIndex = index ?? 0;
-
-    
-//     setCurrentIndex(newIndex);
-   
-    
-//     if (index === 0 || null) {
-//         setTransX('25px');
-//         setCurrentIndex(0) 
-//     } else if (index === 1) {
-//         setTransX('-331px'); 
-//     } else if(index === 2){
-//         setTransX('-693px');
-//     }else if(index === 3){
-//         setTransX('-1054px')
-//     }
-//     else if(index === 4){
-//         setTransX('-1415px')
-//     }
-//     else if(index === 5){
-//         setTransX('-1776px')
-//     }
-//     else if(index === 6){
-//         setTransX('-2133px')
-//     }
-//     else if(index === 7){
-//         setTransX('-2497px')
-//     }
-//     else if(index === 8){
-//         setTransX('-2859px')
-//     }
-//     else if(index === 9){
-//         setTransX('-3220px')
-//     }
-  
-//   };
-
-// index btn ends
-  
-
-
-//  const handleTicketbtn = (index) => {
-    
-//     setCurrentIndex(index);
-//     const newIndex = index ?? 0;
-
-    
-//     setCurrentIndex(newIndex);
-   
-    
-//     if (index === 0 || null) {
-//         setTransX('25px');
-//         setCurrentIndex(0) 
-//     } else if (index === 1) {
-//         setTransX('-286px'); 
-//     } else if(index === 2){
-//         setTransX('-594px');
-//     }else if(index === 3){
-//         setTransX('-902px')
-//     }
-//     else if(index === 4){
-//         setTransX('-1211px')
-//     }
-//     else if(index === 5){
-//         setTransX('-1518px')
-//     }
-//     else if(index === 6){
-//         setTransX('-1825px')
-//     }
-//     else if(index === 7){
-//         setTransX('-2134px')
-//     }
-//     else if(index === 8){
-//         setTransX('-2442px')
-//     }
-//     else if(index === 9){
-//         setTransX('-2749px')
-//     }
-  
-//   };
- 
- const handleTicketbtn = (index) => {
-    //big screen
-    setCurrentIndex(index);
-    const newIndex = index ?? 0;
-
-    
-    setCurrentIndex(newIndex);
-   
-    
-    if (index === 0 || null) {
-        setTransX('25px');
-        setCurrentIndex(0) 
-    } else if (index === 1) {
-        setTransX('-312px'); 
-    } else if(index === 2){
-        setTransX('-654px');
-    }else if(index === 3){
-        setTransX('-992px')
-    }
-    else if(index === 4){
-        setTransX('-1335px')
-    }
-    else if(index === 5){
-        setTransX('-1518px')
-    }
-    else if(index === 6){
-        setTransX('-1825px')
-    }
-    else if(index === 7){
-        setTransX('-2134px')
-    }
-    else if(index === 8){
-        setTransX('-2442px')
-    }
-    else if(index === 9){
-        setTransX('-2749px')
-    }
-  
-  };
-
- 
-//  useEffect(() => {
-//     if (currentIndex === null) {
-//         setCurrentIndex(0);
-//         setTransX('25px');
-//     }
-// }, []);
-  
-
-useEffect(() => {
-    // Only set default values if currentIndex is null or undefined
-    if (currentIndex === null || currentIndex === undefined) {
+    const handleIndexClose = () => {
+        setIsIndexSelected(false);
         setCurrentIndex(0);
-        setTransX('25px');
-    }
-}, [currentIndex]); // Add currentIndex as dependency
+    };
 
+    const closeTransfer = () => {
+        setIsTransferOpen(false);
+        setSelectedItems([]);
+    };
+
+    const closeSendInfo = () => {
+        setSendForm(null);
+        setSelectedItems([]);
+    };
+
+    const handleTicketbtn = (index) => {
+        const newIndex = index ?? 0;
+        setCurrentIndex(newIndex);
+        
+        // Get the appropriate translateX value based on current screen size
+        const translateValue = getTranslateX(newIndex, screenSize);
+        setTransX(translateValue);
+    };
+
+    // Update translateX when screen size changes (for current index)
+    useEffect(() => {
+        if (currentIndex !== null && currentIndex !== undefined) {
+            const translateValue = getTranslateX(currentIndex, screenSize);
+            setTransX(translateValue);
+        }
+    }, [screenSize, currentIndex]);
+
+    useEffect(() => {
+        if (currentIndex === null || currentIndex === undefined) {
+            setCurrentIndex(0);
+            setTransX(getTranslateX(0, screenSize));
+        }
+    }, [currentIndex, screenSize]);
 
     useEffect(() => {
         let timeoutId;
@@ -316,21 +179,50 @@ useEffect(() => {
         if (isLoading) {
             timeoutId = setTimeout(() => {
                 setIsLoading(false);
-            }, 1000); // 1000 milliseconds = 1 second
+            }, 1000);
         }
 
-        // Cleanup function to clear timeout if component unmounts or isLoading changes
         return () => {
             if (timeoutId) {
                 clearTimeout(timeoutId);
             }
         };
     }, [isLoading]);
-  return (
-    <GlobalContext.Provider value={{closeSendInfo,closeTransfer,handleIndexClose,selectedItems,handleTicketbtn,currentIndex,transX,isTicketOpen,setIsTicketOpen,manageBtn,homeBtn,isManageBtn,isLoading,returnToManageBtn,tickets,selectedEventIndex,isTransferOpen,firstEvents,handleCheckboxChange,handleSelectAll,handleSubmit,setSendForm,sendForm,handleEventClick,isIndexSelected,eventIndex,setIsTransferOpen}}>
-      {children}
-    </GlobalContext.Provider>
-  );
+
+    return (
+        <GlobalContext.Provider value={{
+            closeSendInfo,
+            closeTransfer,
+            handleIndexClose,
+            selectedItems,
+            handleTicketbtn,
+            currentIndex,
+            transX,
+            screenSize, // Expose screen size if needed elsewhere
+            isTicketOpen,
+            setIsTicketOpen,
+            manageBtn,
+            homeBtn,
+            isManageBtn,
+            isLoading,
+            returnToManageBtn,
+            tickets,
+            selectedEventIndex,
+            isTransferOpen,
+            firstEvents,
+            handleCheckboxChange,
+            handleSelectAll,
+            handleSubmit,
+            setSendForm,
+            sendForm,
+            handleEventClick,
+            isIndexSelected,
+            eventIndex,
+            setIsTransferOpen
+        }}>
+            {children}
+        </GlobalContext.Provider>
+    );
 };
 
 export { GlobalContext, GlobalProvider };

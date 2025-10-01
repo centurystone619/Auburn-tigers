@@ -39,7 +39,7 @@ const ManageTicketModal = () => {
 
 
       <li className={`h-1/2 relative rounded-tr-4xl rounded-tl-4xl flex items-center justify-center overflow-hidden  `}  style={{background:`${eventIndex[0].transfers.color}`}} >
-<div className=''><img src={eventIndex[0]?.transfers.teamLogo} className='h-[20vh] '/></div>
+<div className=''><img src={eventIndex[0]?.transfers.teamLogo} className='h-[19vh] '/></div>
 
 <div className='absolute  border-8 top-0 left-0'>
       {eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600] top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600]'>
@@ -99,7 +99,7 @@ const ManageTicketModal = () => {
         }} >
         {/* <li className='h-1/2 w-full rounded-tl-2xl rounded-tr-2xl' style={{ background: tickets[0][0].transfers.color || `black` }} > */}
 
-          <li className='h-1/2 w-full rounded-tl-2xl rounded-tr-2xl' style={{background:tickets[0][0].transfers.ticketColor || tickets[0][0].transfers.color }} >
+          <li className='h-1/2 w-full rounded-tl-[10px] rounded-tr-[10px]' style={{background:tickets[0][0].transfers.ticketColor || tickets[0][0].transfers.color }} >
         <ul className={`text-white    `}>
                         <li className={`text-center text-[11px] ${!subArray.sec? 'pt-1':`pt-1`}  ${!subArray.sec? 'pb-2':`pb-1`}`}>{index + 1} / {eventIndex.length}</li>
                         <li>  {subArray.transfers?.GA? ( 
@@ -108,17 +108,17 @@ const ManageTicketModal = () => {
     <div className="flex items-center justify-center">
       {subArray.sec && (
         <div className="flex items-center">
-          <p className="text-center text-nowrap text-[16px] font-[600]">
+          <p className="text-center text-nowrap text-[13px] font-[600]">
             {subArray.sec}
           </p>
         </div>
       )}
-        {subArray.sec && !subArray.row && <em className="mx-1">•</em>}
+        {/* {subArray.sec && !subArray.row && <em className="mx-1">•</em>} */}
 
       {subArray.row && (
         <div className="flex items-center">
           <em className="mx-1">•</em>
-          <p className="text-center text-nowrap font-[600] text-[16px]">
+          <p className="text-center text-nowrap font-[600] text-[13px]">
             {subArray.row}
           </p>
         </div>
@@ -129,7 +129,7 @@ const ManageTicketModal = () => {
 
     {/* Second line centered for GA */}
     <div className="flex items-center justify-center mt-1">
-      <p className="text-center font-[600] text-[16px]">
+      <p className="text-center font-[600] text-[13px]">
         {subArray.transfers?.GA}
       </p>
     </div>
@@ -175,7 +175,7 @@ const ManageTicketModal = () => {
               // </div>
               
 
-              <ul className='flex items-center justify-center mt-2 text-[16px] font-[600]'>
+              <ul className='flex items-center justify-center mt-2 text-[13px] font-[600]'>
                 <li>
                   {subArray.level && <div className='flex'>
                     <p>{subArray.level}</p>
@@ -211,7 +211,7 @@ const ManageTicketModal = () => {
               </li>
                       </ul>
         </li>
-        <li id='shadow' className='h-1/2 w-full flex items-center justify-center rounded-bl-2xl rounded-br-2xl'>
+        <li id='shadow' className='h-1/2 w-full flex items-center justify-center rounded-bl-[10px] rounded-br-[10px]'>
         <div><img src={appleWallet} className='w-28'/></div>
         </li>
       </ul>

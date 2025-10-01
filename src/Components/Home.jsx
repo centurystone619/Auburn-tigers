@@ -1,41 +1,52 @@
 import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../Context'
 import storyIcon from '../assets/storyicon.jpg'
-import {stories} from '../homedata'
+import {story} from '../homedata'
+import homeLogo from '../assets/authomeicon.jpg'
+import notifIcon from '../assets/notificon.jpg'
+import favoritesIcon from '../assets/favorites.jpg'
+
 
 
 const Home = () => {
     const{tickets}= useContext(GlobalContext)
     
-    const [storiesData,setStoriesData] = useState(stories)
+    const [news,setNews] = useState(story)
    
     
   return (
-    <div className='' >
-       <header className="flex items-center justify-center  h-[20vh]" style={{ background: tickets[0][0].transfers.color || `black` }}>
+    <div className='bg-[#f3f4f8]' >
+       <header className="flex items-center justify-center  h-[8vh] py-2 px-3">
      
-     <div className=' w-3/12'>  <img src={tickets[0][0].transfers.teamLogo}/> </div>
+     <div className=' w-full'> 
+     <ul className='flex justify-between items-center w-full'>
+      <li className='w-2/12'></li>
+      <li className='flex-1 '>
+        <p className='flex items-center justify-center '><img src={homeLogo} className='w-14'/></p>
+      </li>
+      <li className='w-2/12'><img src={notifIcon}/></li>
+     </ul>
+      </div>
   </header>
-<section  className="h-[70vh]  overflow-hidden bg-white ">
+<section  className="h-[81vh]  overflow-hidden  px-5 ">
 
+  <div className='border-2 h-[62vh] relative rounded-[10px]' style={{backgroundImage:`url(${news.img})`,backgroundSize:'cover',backgroundRepeat:'no-repeat'}}>
+    <div className='absolute bottom-0 border-8  w-full pb-5'>
+<ul className='px-3 text-[#ffffff] text-wrap flex flex-col items-center justify-center'>
+  <li className='text-[18px] font-[500] text-center'>{story.topic}</li>
+  <li className='my-3'><button className='bg-orange-500 px-2.5 rounded-sm py-1.5'>Read More</button></li>
+  <li>
+    <ul className='pb-3 flex'>
+      <li id='activebtn'></li>
+      <li id='notactivebtn' className='mx-1'></li>
+      <li id='notactivebtn'></li>
+    </ul>
+  </li>
+</ul>
+    </div>
+  </div>
+  <div className='mt-4'><img src={favoritesIcon}/></div>
 
-<div className='-mt-2 mx-4'>
-
-
-{storiesData.map((story,index)=>(
-<div id='#homeabsolute ' className="h-[30vh]  my-4 relative  text-white " key={index} style={{backgroundImage:`url(${story.img})`, backgroundRepeat:`no-repeat`, backgroundSize:"cover"}}>
-
-  <div className='pt-5'><p className='bg-white text-black text-[10px] py-1 font-[800] w-fit px-2 rounded-r-4xl flex items-center'><span className='mr-3'><img src={storyIcon} className='w-3'/></span> <span>STORY</span></p></div>
- <div  className=' '> <div  className=' absolute bottom-0 '> 
-  <ul id='homeabsolute'  className='px-5 space-y-2  pb-2 text-grey-200 '>
-              <li className='font-semibold text-[11px] text-grey-200'>{story.sportType} <em className="mx-1">•</em> {story.time}</li>
-              <li className='leading-none font-bold text-[18px]'>{story.topic}</li>
-        { story.summary &&     <li className='leading-none text-[11px]'>{story.summary.substring(0, 50)} ...</li>}
-            </ul>
-  </div></div>
-</div>
-))}
-</div>
 </section>
     </div>
   )
