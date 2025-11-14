@@ -1,4 +1,4 @@
-import React, { useContext,  } from 'react'
+import  { useContext,  } from 'react'
 import { GlobalContext } from '../Context'
 import sellseatgeek from '../assets/sell.PNG?url';
 import Transfer from './Transfer';
@@ -41,9 +41,12 @@ const ManageTicketModal = () => {
       <li className={`h-1/2 relative rounded-tr-4xl rounded-tl-4xl flex items-center justify-center overflow-hidden  `}  style={{background:`${eventIndex[0].transfers.color}`}} >
 <div className=''><img src={eventIndex[0]?.transfers.teamLogo} className='h-[19vh] '/></div>
 
-<div className='absolute  border-8 top-0 left-0'>
-      {eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600] top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex text-[12px] font-[600]'>
-      {eventIndex[0].eventData.sportsdow.toUpperCase()} <em className="">•</em> {eventIndex[0].time.toUpperCase()} </p>}
+<div className='absolute  border-8 top-0 left-0  '>
+    <div className='font-[600] text-[11px] text-nowrap'>
+{eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex  top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex '>
+      {eventIndex[0].eventData.sportsdow.toUpperCase()} <em className="px-[2px]"> • </em> {eventIndex[0].time.toUpperCase()} </p>}
+    </div>
+      
     </div>  
       </li>
 
@@ -242,7 +245,7 @@ const ManageTicketModal = () => {
         </div>
 
         <ul  className='flex mt-3  px-5 text-center font-[500] '>
-                        <li id='btn-border' className='w-1/2 mx-1 rounded-sm py-1'><button onClick={(e)=>setIsTransferOpen(true)}>Transfer</button></li>
+                        <li id='btn-border' className='w-1/2 mx-1 rounded-sm py-1'><button onClick={()=>setIsTransferOpen(true)}>Transfer</button></li>
                         <li className='w-1/2 mx-1 rounded-sm py-1' id='btn-border'><button>Sell On Seatgeek</button></li>
                     </ul>
 
@@ -297,7 +300,7 @@ const ManageTicketModal = () => {
   return(
 
 
-<div className='flex justify-between my-5' key={index} onClick={(e)=>handleEventClick(index)}>
+<div className='flex justify-between my-5' key={index} onClick={()=>handleEventClick(index)}>
 <ul className='w-10/12 '>
   <li className='text-[#84868b] font-[600] text-[13px]'>{eventType}</li>
   <li className='text-[#212329] font-[700] text-[15px] leading-none my-1'>{artiste}</li>
