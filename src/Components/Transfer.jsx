@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { GlobalContext } from '../Context'
 import SendInfo from './SendInfo'
 import backIcon from '../assets/back.png'
@@ -6,7 +6,7 @@ import backIcon from '../assets/back.png'
 
 const Transfer = () => {
     const {tickets,eventIndex,handleCheckboxChange,handleSelectAll,handleSubmit,selectedItems,setSendForm,sendForm,closeTransfer}= useContext(GlobalContext)
-     const {artiste,transfers,sec,row,seat,type}=eventIndex[0]
+     const {transfers,sec,row,seat,type}=eventIndex[0]
      const ticketList = transfers.ticketId ? transfers.ticketId : transfers.seats;
   return (
     <div className='absolute top-0 h-[100%]  w-[100%]'>
@@ -27,8 +27,9 @@ const Transfer = () => {
                 <li className='flex  py-4 bg-[#f4f5f9] px-4'>
                     <ul className='w-9/12 '>
                     <li className='text-[#212329] font-[700] text-[15px] leading-none my-1'>{eventIndex[0].artiste}</li>
-                        <li><p className=" text-[#84868b] font-[500] text-[14px]"> {eventIndex[0].eventData.sportsdow}, {eventIndex[0].eventData.month} {eventIndex[0].eventData.day}, {eventIndex[0].eventData.year} <em className="">•</em> {eventIndex[0].time}</p></li>
-                        <li className='text-[#84868b] font-[500] text-[14px] '>{eventIndex[0].venue}</li>
+                        <li><p className=" text-[#84868b] font-[500] text-[11px]"> {eventIndex[0].eventData.sportsdow}, {eventIndex[0].eventData.month} {eventIndex[0].eventData.day}, {eventIndex[0].eventData.year} <em className="">•</em> {eventIndex[0].time}</p></li>
+                        
+                        <li className='text-[#84868b] font-[500] text-[13px] '>{eventIndex[0].venue}</li>
                     </ul>
                   <div>  <p className='text-center bg-black text-white rounded-full text-[12px] py-1 px-3'>{selectedItems.length} / {eventIndex.length}</p></div>
                 </li>

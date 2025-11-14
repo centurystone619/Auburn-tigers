@@ -43,8 +43,13 @@ const ManageTicketModal = () => {
 
 <div className='absolute  border-8 top-0 left-0  '>
     <div className='font-[600] text-[11px] text-nowrap'>
-{eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex  top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  <p className=' absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex '>
-      {eventIndex[0].eventData.sportsdow.toUpperCase()} <em className="px-[2px]"> • </em> {eventIndex[0].time.toUpperCase()} </p>}
+{eventIndex[0].eventData.dayMonthYear ? <p className='   text-white ml-5 bg-black w-fit px-2 rounded-full flex  top-20'>{eventIndex[0].eventData.dayMonthYear}</p> :  
+<p className='absolute my-5 text-white ml-5 bg-black w-fit px-2 rounded-full flex items-center whitespace-nowrap'>
+    <span>{eventIndex[0].eventData.sportsdow.toUpperCase()}</span>
+    <em className="px-[2px]"> • </em>
+    <span>{eventIndex[0].time.toUpperCase()}</span>
+</p>
+    }
     </div>
       
     </div>  
